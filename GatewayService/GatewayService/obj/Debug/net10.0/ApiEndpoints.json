@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "GatewayService.Controllers.HealthControler",
+    "Method": "Get",
+    "RelativePath": "api/HealthControler",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GatewayService.Controllers.ReadingController",
+    "Method": "Post",
+    "RelativePath": "api/Reading",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "GatewayService.Dtos.CreateReadingDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

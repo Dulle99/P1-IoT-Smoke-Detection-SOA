@@ -1,0 +1,151 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\controllers\\readingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\controllers\\readingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\dtos\\createreadingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\dtos\\createreadingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\controllers\\healthcontroler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\controllers\\healthcontroler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|c:\\users\\dules\\onedrive\\desktop\\p1 smoke detector iot\\gatewayservice\\gatewayservice\\gatewayservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{745A089D-F750-8C43-D481-611EC449C132}|GatewayService\\GatewayService.csproj|solutionrelative:gatewayservice\\gatewayservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ReadingController.cs",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Controllers\\ReadingController.cs",
+              "RelativeDocumentMoniker": "GatewayService\\Controllers\\ReadingController.cs",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Controllers\\ReadingController.cs",
+              "RelativeToolTip": "GatewayService\\Controllers\\ReadingController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAUwB8AAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T13:44:50.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CreateReadingDto.cs",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Dtos\\CreateReadingDto.cs",
+              "RelativeDocumentMoniker": "GatewayService\\Dtos\\CreateReadingDto.cs",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Dtos\\CreateReadingDto.cs",
+              "RelativeToolTip": "GatewayService\\Dtos\\CreateReadingDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T13:40:52.063Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HealthControler.cs",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Controllers\\HealthControler.cs",
+              "RelativeDocumentMoniker": "GatewayService\\Controllers\\HealthControler.cs",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Controllers\\HealthControler.cs",
+              "RelativeToolTip": "GatewayService\\Controllers\\HealthControler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T13:36:56.749Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "GatewayService\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Properties\\launchSettings.json",
+              "RelativeToolTip": "GatewayService\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-13T13:32:50.38Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\appsettings.json",
+              "RelativeDocumentMoniker": "GatewayService\\appsettings.json",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\appsettings.json",
+              "RelativeToolTip": "GatewayService\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-13T13:32:47.032Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "GatewayService\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\appsettings.Development.json",
+              "RelativeToolTip": "GatewayService\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-13T13:32:44.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GatewayService.csproj",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\GatewayService.csproj",
+              "RelativeDocumentMoniker": "GatewayService\\GatewayService.csproj",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\GatewayService.csproj",
+              "RelativeToolTip": "GatewayService\\GatewayService.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-13T13:25:56.104Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Program.cs",
+              "RelativeDocumentMoniker": "GatewayService\\Program.cs",
+              "ToolTip": "C:\\Users\\Dules\\OneDrive\\Desktop\\P1 Smoke detector IoT\\GatewayService\\GatewayService\\Program.cs",
+              "RelativeToolTip": "GatewayService\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T13:20:07.493Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

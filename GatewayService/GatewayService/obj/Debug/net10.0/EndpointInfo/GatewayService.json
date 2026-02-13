@@ -1,0 +1,101 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "GatewayService",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/HealthControler": {
+      "get": {
+        "tags": [
+          "HealthControler"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reading": {
+      "post": {
+        "tags": [
+          "Reading"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReadingDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReadingDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReadingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateReadingDto": {
+        "type": "object",
+        "properties": {
+          "utc": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "temperatureC": {
+            "type": "number",
+            "format": "double"
+          },
+          "humidityPercent": {
+            "type": "number",
+            "format": "double"
+          },
+          "eCo2Ppm": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tVocPpb": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pressureHpa": {
+            "type": "number",
+            "format": "double"
+          },
+          "pm25": {
+            "type": "number",
+            "format": "double"
+          },
+          "fireAlarm": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "HealthControler"
+    },
+    {
+      "name": "Reading"
+    }
+  ]
+}
