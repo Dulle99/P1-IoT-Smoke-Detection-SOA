@@ -17,24 +17,46 @@ namespace GatewayService.Controllers
             _config = configuration;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateReadingDto dto)
+        private string DataServiceBaseUrl()
         {
             var baseUrl = _config["DataService:BaseUrl"];
-            if (string.IsNullOrEmpty(baseUrl)){
-                return StatusCode(StatusCodes.Status500InternalServerError, "Data service base URL is not configured.");
-            }
-
-            var response = await _httpClient.PostAsJsonAsync($"{baseUrl}/readings", dto);
-
-            if (!response.IsSuccessStatusCode)
+            if(string.IsNullOrEmpty(baseUrl))
             {
-                var errorBody = await response.Content.ReadAsStringAsync();
-                return StatusCode((int)response.StatusCode, errorBody);
+                throw new InvalidOperationException("Data service base URL is not configured.");
             }
 
-            var result = await response.Content.ReadFromJsonAsync<object>();
-            return StatusCode(201, result);
+            return baseUrl.TrimEnd('/');
+        }
+
+        // POST /api/readings --> Forward to Data Service POST /readings
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateReadingDto dto)
+        {
+            var url = $"{DataServiceBaseUrl()}/readings";
+            var response = await _httpClient.PostAsJsonAsync(url, dto);
+
+            var body = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, body);
+        }
+
+        //GET /api/readings --> forward to Data Service GET /readings
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var url = $"{DataServiceBaseUrl()}/readings";
+            var response = await _httpClient.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, body);
+        }
+
+        //Get /api/readings/{id} --> forward to Data Service GET /readings/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] string id)
+        {
+            var url = $"{DataServiceBaseUrl()}/readings/{id}";
+            var response = await _httpClient.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, body);
         }
     }
 }

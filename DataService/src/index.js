@@ -56,7 +56,7 @@ app.get("/readings", async (req, res) => {
     res.json(items);
 });
 
-app.get("/reading/:id",async (req, res) => {
+app.get("/readings/:id",async (req, res) => {
     const db = getDb();
     const collection = db.collection('readings');
 
