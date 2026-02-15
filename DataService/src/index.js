@@ -51,7 +51,16 @@ app.get("/readings", async (req, res) => {
     const db = getDb();
     const collection = db.collection('readings');
 
-    const items= await collection.find().sort({ utc: -1 }).toArray();
+    // Allow an optional `limit` query param but cap at 50
+    let limit = 50;
+    if (req.query.limit) {
+        const parsed = parseInt(req.query.limit, 10);
+        if (!isNaN(parsed) && parsed > 0) {
+            limit = Math.min(parsed, 50);
+        }
+    }
+
+    const items = await collection.find().sort({ utc: -1 }).limit(limit).toArray();
 
     res.json(items);
 });
