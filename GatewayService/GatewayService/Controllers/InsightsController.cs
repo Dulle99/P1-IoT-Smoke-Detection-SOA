@@ -36,8 +36,7 @@ namespace GatewayService.Controllers
             //(1) Get latest reading from Data Service
             var readingsUrl = $"{DataServiceBaseUrl()}/readings?limit={limit}";
             var response = await _httpClient.GetAsync(readingsUrl);
-            var body = await response.Content.ReadAsStringAsync();
-            //var readingsJson = await _httpClient.GetStringAsync(readingsUrl);
+            var body = await response.Content.ReadAsStringAsync();9
 
             if (!response.IsSuccessStatusCode)
                 return StatusCode((int)response.StatusCode, body);
