@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GatewayService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/readings")]
     [ApiController]
     public class ReadingController : ControllerBase
     {
@@ -39,9 +39,9 @@ namespace GatewayService.Controllers
             return StatusCode((int)response.StatusCode, body);
         }
 
-        //GET /api/readings/{limit} --> forward to Data Service GET /readings
-        [HttpGet("{limit}")]
-        public async Task<IActionResult> Get([FromRoute]int limit)
+        //GET /api/readings?limit={limit} --> forward to Data Service GET /readings
+        [HttpGet()]
+        public async Task<IActionResult> Get([FromQuery]int limit = 1)
         {
             var url = $"{DataServiceBaseUrl()}/readings?limit={limit}";
             var response = await _httpClient.GetAsync(url);
@@ -50,7 +50,7 @@ namespace GatewayService.Controllers
         }
 
         //Get /api/readings/{id} --> forward to Data Service GET /readings/{id}
-        [HttpGet("GetId/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var url = $"{DataServiceBaseUrl()}/readings/{id}";

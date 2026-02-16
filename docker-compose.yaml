@@ -9,7 +9,7 @@ services:
 
   dataservice:
     build:
-      context: ./dataservice
+      context: ./Dataservice
     container_name: smoke-dataservice
     environment:
       - PORT=5001

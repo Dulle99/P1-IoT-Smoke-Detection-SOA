@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GatewayService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/health")]
     [ApiController]
     public class HealthControler : ControllerBase
     {

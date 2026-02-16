@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace GatewayService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/insights")]
     [ApiController]
     public class InsightsController : ControllerBase
     {
@@ -28,15 +28,15 @@ namespace GatewayService.Controllers
             return baseUrl.TrimEnd('/');
         }
 
-        // GET /api/insights/curent/{limit}
+        // GET /api/insights/curent?limit={limit}
         //Returns: latest readings + current weather insights(Open-Meteo)
-        [HttpGet("current/{limit}")]
-        public async Task<IActionResult> Current([FromRoute]int limit)
+        [HttpGet("current")]
+        public async Task<IActionResult> Current([FromQuery]int limit = 1)
         {
             //(1) Get latest reading from Data Service
             var readingsUrl = $"{DataServiceBaseUrl()}/readings?limit={limit}";
             var response = await _httpClient.GetAsync(readingsUrl);
-            var body = await response.Content.ReadAsStringAsync();9
+            var body = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
                 return StatusCode((int)response.StatusCode, body);
