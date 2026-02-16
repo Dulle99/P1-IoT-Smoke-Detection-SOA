@@ -20,7 +20,7 @@ namespace GatewayService.Controllers
         private string DataServiceBaseUrl()
         {
             var baseUrl = _config["DataService:BaseUrl"];
-            if(string.IsNullOrEmpty(baseUrl))
+            if (string.IsNullOrEmpty(baseUrl))
             {
                 throw new InvalidOperationException("Data service base URL is not configured.");
             }
@@ -39,18 +39,18 @@ namespace GatewayService.Controllers
             return StatusCode((int)response.StatusCode, body);
         }
 
-        //GET /api/readings --> forward to Data Service GET /readings
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        //GET /api/readings/{limit} --> forward to Data Service GET /readings
+        [HttpGet("{limit}")]
+        public async Task<IActionResult> Get([FromRoute]int limit)
         {
-            var url = $"{DataServiceBaseUrl()}/readings";
+            var url = $"{DataServiceBaseUrl()}/readings?limit={limit}";
             var response = await _httpClient.GetAsync(url);
             var body = await response.Content.ReadAsStringAsync();
             return StatusCode((int)response.StatusCode, body);
         }
 
         //Get /api/readings/{id} --> forward to Data Service GET /readings/{id}
-        [HttpGet("{id}")]
+        [HttpGet("GetId/{id}")]
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var url = $"{DataServiceBaseUrl()}/readings/{id}";

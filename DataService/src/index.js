@@ -51,12 +51,12 @@ app.get("/readings", async (req, res) => {
     const db = getDb();
     const collection = db.collection('readings');
 
-    // Allow an optional `limit` query param but cap at 50
+    // Allow an optional `limit` if limit is not provided or invalid, default to 50
     let limit = 50;
+    const parsed = parseInt(req.query.limit, 10);
     if (req.query.limit) {
-        const parsed = parseInt(req.query.limit, 10);
         if (!isNaN(parsed) && parsed > 0) {
-            limit = Math.min(parsed, 50);
+            limit = parsed;
         }
     }
 

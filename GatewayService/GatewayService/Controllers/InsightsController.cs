@@ -28,16 +28,21 @@ namespace GatewayService.Controllers
             return baseUrl.TrimEnd('/');
         }
 
-        // GET /api/insights/curent
+        // GET /api/insights/curent/{limit}
         //Returns: latest readings + current weather insights(Open-Meteo)
-        [HttpGet("current")]
-        public async Task<IActionResult> Current()
+        [HttpGet("current/{limit}")]
+        public async Task<IActionResult> Current([FromRoute]int limit)
         {
             //(1) Get latest reading from Data Service
-            var readingsUrl = $"{DataServiceBaseUrl()}/readings";
-            var readingsJson = await _httpClient.GetStringAsync(readingsUrl);
+            var readingsUrl = $"{DataServiceBaseUrl()}/readings?limit={limit}";
+            var response = await _httpClient.GetAsync(readingsUrl);
+            var body = await response.Content.ReadAsStringAsync();
+            //var readingsJson = await _httpClient.GetStringAsync(readingsUrl);
 
-            using var doc = JsonDocument.Parse(readingsJson);
+            if (!response.IsSuccessStatusCode)
+                return StatusCode((int)response.StatusCode, body);
+
+            using var doc = JsonDocument.Parse(body);
             var root = doc.RootElement;
 
             if(root.ValueKind != JsonValueKind.Array || root.GetArrayLength() == 0)
@@ -45,20 +50,27 @@ namespace GatewayService.Controllers
                 return NotFound("No readings found in DataService.");
             }
 
-            var latestReading = root[0];
-
             //2) Call external weather API (Open-Meteo)
-
             var weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=44.8&longitude=20.5&current=temperature_2m,relative_humidity_2m,wind_speed_10m";
-            var wheaterJson = await _httpClient.GetStringAsync(weatherUrl);
+            var weatherJson = await _httpClient.GetStringAsync(weatherUrl);
+            using var weatherDoc = JsonDocument.Parse(weatherJson);
+            var weatherEl = weatherDoc.RootElement.Clone(); // clone because weatherDoc will be disposed
 
-            //3) Return integrated response
+            //3) Integrate data
+            var integratedData = new List<object>();
 
-            return Ok(new
+            foreach (var element in root.EnumerateArray())
             {
-                latestReading = JsonDocument.Parse(latestReading.GetRawText()).RootElement,
-                weather = JsonDocument.Parse(wheaterJson).RootElement
-            });
+                integratedData.Add(new
+                {
+                    latestReading = element.Clone(), // clone because readingsDoc will be disposed
+                    weather = weatherEl
+                });
+            }
+
+            //4) Return integrated response
+
+            return Ok(integratedData);
         }
     }
 }
