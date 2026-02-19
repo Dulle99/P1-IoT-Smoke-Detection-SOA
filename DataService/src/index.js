@@ -26,7 +26,7 @@ app.post("/readings", async (req, res) => {
     const reading = req.body;
 
     if(reading.utc == null){
-        return res.status(400).json({ error: "Missing 'Utc' field in the request body." });
+        return res.status(400).json({ error: "Missing 'utc' field in the request body." });
     }
 
     const db = getDb();
@@ -96,7 +96,5 @@ connectDb()
     process.exit(1);
 });
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`DataService running on port ${PORT}`);
-});
+
 
