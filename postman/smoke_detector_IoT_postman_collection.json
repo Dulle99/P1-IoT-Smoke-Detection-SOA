@@ -216,38 +216,6 @@
           }
         },
         {
-          "name": "Swagger UI - DataService",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{dataServiceBaseUrl}}/api-docs",
-              "host": [
-                "{{dataServiceBaseUrl}}"
-              ],
-              "path": [
-                "api-docs"
-              ]
-            }
-          }
-        },
-        {
-          "name": "OpenAPI JSON - DataService",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{dataServiceBaseUrl}}/api-docs.json",
-              "host": [
-                "{{dataServiceBaseUrl}}"
-              ],
-              "path": [
-                "api-docs.json"
-              ]
-            }
-          }
-        },
-        {
           "name": "Create Reading - DataService",
           "event": [
             {
