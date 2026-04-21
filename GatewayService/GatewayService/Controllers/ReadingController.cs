@@ -41,7 +41,7 @@ namespace GatewayService.Controllers
 
         //GET /api/readings?limit={limit} --> forward to Data Service GET /readings
         [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery]int limit = 1)
+        public async Task<IActionResult> Get([FromQuery] int limit = 1)
         {
             var url = $"{DataServiceBaseUrl()}/readings?limit={limit}";
             var response = await _httpClient.GetAsync(url);
@@ -55,6 +55,25 @@ namespace GatewayService.Controllers
         {
             var url = $"{DataServiceBaseUrl()}/readings/{id}";
             var response = await _httpClient.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, body);
+        }
+
+        // PUT /api/readings/{id} --> forward to Data Service PUT /readings/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] string id, [FromBody] CreateReadingDto dto)
+        {
+            var url = $"{DataServiceBaseUrl()}/readings/{id}";
+            var response = await _httpClient.PutAsJsonAsync(url, dto);
+            var body = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, body);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] string id)
+        {
+            var url = $"{DataServiceBaseUrl()}/readings/{id}";
+            var response = await _httpClient.DeleteAsync(url);
             var body = await response.Content.ReadAsStringAsync();
             return StatusCode((int)response.StatusCode, body);
         }
