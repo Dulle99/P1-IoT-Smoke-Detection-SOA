@@ -1,0 +1,374 @@
+{
+  "info": {
+    "name": "P1 IoT Smoke Detection SOA",
+    "_postman_id": "c4f4d3b7-2b5a-4a3f-9c8d-3afbd2a2f001",
+    "description": "Postman collection for GatewayService and DataService endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "gatewayBaseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "dataServiceBaseUrl",
+      "value": "http://localhost:5001"
+    },
+    {
+      "key": "readingId",
+      "value": ""
+    },
+    {
+      "key": "limit",
+      "value": "5"
+    }
+  ],
+  "item": [
+    {
+      "name": "GatewayService",
+      "item": [
+        {
+          "name": "Health - Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/health",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Reading - Gateway",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.id) { pm.collectionVariables.set('readingId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"utc\": 1650001111,\n  \"temperatureC\": 22.4,\n  \"humidityPercent\": 45.1,\n  \"eCo2Ppm\": 650,\n  \"tVocPpb\": 120,\n  \"pressureHpa\": 1013.2,\n  \"pm25\": 7.8,\n  \"fireAlarm\": false\n}"
+            },
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/readings",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "readings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Readings - Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/readings?limit={{limit}}",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "readings"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "{{limit}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Reading By ID - Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/readings/{{readingId}}",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "readings",
+                "{{readingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Reading - Gateway",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"utc\": 1650001111,\n  \"temperatureC\": 31.5,\n  \"humidityPercent\": 55.0,\n  \"eCo2Ppm\": 900,\n  \"tVocPpb\": 240,\n  \"pressureHpa\": 1009.4,\n  \"pm25\": 18.2,\n  \"fireAlarm\": true\n}"
+            },
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/readings/{{readingId}}",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "readings",
+                "{{readingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Reading - Gateway",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/readings/{{readingId}}",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "readings",
+                "{{readingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Current Insights - Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/api/insights/current?limit={{limit}}",
+              "host": [
+                "{{gatewayBaseUrl}}"
+              ],
+              "path": [
+                "api",
+                "insights",
+                "current"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "{{limit}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "DataService",
+      "item": [
+        {
+          "name": "Health - DataService",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/health",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Swagger UI - DataService",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/api-docs",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "api-docs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "OpenAPI JSON - DataService",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/api-docs.json",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "api-docs.json"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Reading - DataService",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.id) { pm.collectionVariables.set('readingId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"utc\": 1650002222,\n  \"temperatureC\": 23.1,\n  \"humidityPercent\": 41.7,\n  \"eCo2Ppm\": 610,\n  \"tVocPpb\": 110,\n  \"pressureHpa\": 1012.1,\n  \"pm25\": 6.3,\n  \"fireAlarm\": false\n}"
+            },
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/readings",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "readings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Readings - DataService",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/readings?limit={{limit}}",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "readings"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "{{limit}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Reading By ID - DataService",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/readings/{{readingId}}",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "readings",
+                "{{readingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Reading - DataService",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"utc\": 1650002222,\n  \"temperatureC\": 29.9,\n  \"humidityPercent\": 52.3,\n  \"eCo2Ppm\": 820,\n  \"tVocPpb\": 220,\n  \"pressureHpa\": 1008.7,\n  \"pm25\": 14.6,\n  \"fireAlarm\": true\n}"
+            },
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/readings/{{readingId}}",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "readings",
+                "{{readingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Reading - DataService",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{dataServiceBaseUrl}}/readings/{{readingId}}",
+              "host": [
+                "{{dataServiceBaseUrl}}"
+              ],
+              "path": [
+                "readings",
+                "{{readingId}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
