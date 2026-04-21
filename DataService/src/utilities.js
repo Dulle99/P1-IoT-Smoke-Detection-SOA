@@ -49,5 +49,16 @@ function tryParseObjectId(id) {
     }
 };
 
-module.exports = { parseReading, tryParseObjectId };
+function mapReadingResponse(doc) {
+    if(!doc) return null;
+
+    const { _id, ...rest } = doc;
+    return { 
+        id: _id.toString(),
+         ...rest 
+        };
+}
+
+
+module.exports = { parseReading, tryParseObjectId, mapReadingResponse };
 

@@ -64,7 +64,7 @@ components:
         - $ref: '#/components/schemas/ReadingInput'
         - type: object
           properties:
-            _id:
+            id:
               type: string
               example: 6807f1ab12cd34ef56ab7890
             createdAt:

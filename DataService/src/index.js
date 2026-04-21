@@ -5,12 +5,14 @@ const swaggerUi = require('swagger-ui-express');
 const express = require('express');
 const {connectDb, getDb} = require('./db');
 const {ObjectId} = require('mongodb');
-const { parseReading, tryParseObjectId } = require('./utilities');
+const { parseReading, tryParseObjectId, mapReadingResponse } = require('./utilities');
 
 const app = express();
 app.use(express.json());
 
 // Load OpenAPI spec and set up Swagger UI
+// http://localhost:5001/api-docs
+// http://localhost:5001/api-docs.json
 const openApiPath = path.join(__dirname, '..', 'openapi.yaml');
 const swaggerDocument = yaml.load(fs.readFileSync(openApiPath, 'utf8'));
 
@@ -38,7 +40,6 @@ app.get('/health', async (req, res) => {
 
 app.post("/readings", async (req, res) => {
     const parsed = parseReading(req.body);
-    console.log("Parsed reading:", parsed);
 
     if(parsed.error){
         return res.status(400).json({ error: parsed.error  });
@@ -51,11 +52,10 @@ app.post("/readings", async (req, res) => {
         ...parsed,
         createdAt: new Date() 
     };
-    console.log("Document to insert:", doc);
     
     const result = await collection.insertOne(doc);
 
-    res.status(201).json({id: result.insertedId, ...doc});
+    res.status(201).json(mapReadingResponse({ _id: result.insertedId, ...doc }));
 });
 
 //#endregion Post
@@ -78,7 +78,7 @@ app.get("/readings", async (req, res) => {
 
     const items = await collection.find().sort({ utc: -1 }).limit(limit).toArray();
 
-    res.json(items);
+    res.json(items.map(mapReadingResponse));
 });
 
 // Read by ID
@@ -98,7 +98,7 @@ app.get("/readings/:id",async (req, res) => {
     if(!item){
         return res.status(404).json({ error: "Reading not found with the provided ID." });
     }
-    res.json(item);
+    res.json(mapReadingResponse(item));
 });
 
 //#endregion Get
@@ -135,7 +135,7 @@ app.put('/readings/:id', async (req, res) => {
         { $set: updatedDoc });
 
     const updatedItem = await collection.findOne({ _id: objectId });
-    res.json(updatedItem);
+    res.json(mapReadingResponse(updatedItem));
 });
 
 //#endregion Put
