@@ -1,273 +1,368 @@
 # IoT Smoke Detection System – Service-Oriented Architecture (SOA)
 
+**Author:** Dušan Sotirov
 
+## Project Description
 
-Author: Dušan Sotirov
+This project implements an **IoT Smoke Detection System** using a **service-oriented architecture with two microservices built in different technologies**.
 
-Architecture: Microservices (Service-Oriented Architecture)
+The goal of the project is to demonstrate how an IoT-oriented system can be decomposed into smaller services that communicate over REST, while also showing how an API Gateway can aggregate internal and external data into a single response.
 
-Technologies: ASP.NET Core, Node.js, MongoDB, Docker
+The system is based on smoke sensor readings and simulates a realistic monitoring scenario in which sensor data is stored, queried, updated, and integrated with external environmental information.
 
+---
 
+## Problem Statement
 
+Modern IoT systems often collect large amounts of sensor data from distributed devices.  
+In a smoke detection scenario, raw readings such as temperature, humidity, air quality indicators, and fire alarm state are useful on their own, but their value becomes much higher when they are:
 
+- stored in a structured way,
+- made accessible through APIs,
+- processed by separate services with clear responsibilities,
+- and enriched with external contextual data.
 
-##### Project Overview
+A monolithic solution could handle all of this in one application, but that would make the system harder to extend, maintain, and reuse.
 
+This project solves that problem by separating responsibilities into two microservices:
 
+- a **GatewayService**, which acts as the public entry point and facade,
+- and a **DataService**, which is responsible for storing and retrieving smoke sensor data.
 
-This project implements a microservice-based IoT Smoke Detection system using a Service-Oriented Architecture (SOA).
+The gateway also integrates an **external weather API**, so the client can receive both local sensor readings and current weather information in a single response.
 
+---
 
+## Value and Motivation of the Project
 
-The system consists of:
+The project demonstrates why service-oriented and microservice-based design is useful in IoT systems.
 
+### Main value of the solution
 
+- **Separation of concerns**  
+  Data persistence is isolated in one service, while orchestration and aggregation are handled in another.
 
-* A GatewayService built with ASP.NET Core acting as a facade and API aggregator.
-* A DataService built with Node.js and Express responsible for data persistence.
-* A MongoDB NoSQL database for storing sensor readings.
-* An external Weather API (Open-Meteo) integrated by the Gateway to demonstrate service orchestration.
+- **Technology heterogeneity**  
+  The system uses two different technologies:
+  - **ASP.NET Core** for the GatewayService
+  - **Node.js + Express** for the DataService
 
+- **REST-based interoperability**  
+  Services communicate synchronously through HTTP APIs, which reflects a common SOA pattern.
 
+- **Integration of internal and external data**  
+  The system combines local smoke readings with live weather data from an external API.
 
-The project demonstrates distributed system design, RESTful communication between services, container orchestration using Docker Compose, and bulk dataset ingestion from CSV.
+- **Improved maintainability**  
+  Each service can be modified independently without changing the whole system design.
 
+- **Realistic IoT data handling**  
+  The project includes dataset import and CRUD operations over sensor readings.
 
+---
 
+## Chosen Data Domain
 
+The chosen domain is **smoke detection / environmental monitoring in IoT systems**.
 
+The application works with smoke-related and environment-related sensor readings, including values such as:
 
+- `utc` – timestamp of the reading
+- `temperatureC` – measured temperature in Celsius
+- `humidityPercent` – humidity percentage
+- `eCo2Ppm` – equivalent CO2 level
+- `tVocPpb` – total volatile organic compounds
+- `pressureHpa` – atmospheric pressure
+- `pm25` – PM2.5 particle concentration
+- `fireAlarm` – boolean value indicating detected alarm state
 
-##### Architecture Overview
+These values are useful because they represent typical environmental readings that can indicate smoke, air pollution, or dangerous indoor conditions.
 
+---
 
+## Architecture Overview
 
-Client (Swagger / HTTP)
+The system is composed of the following parts:
 
-&nbsp;       ↓
+- **GatewayService** – ASP.NET Core microservice acting as API Gateway / Facade
+- **DataService** – Node.js + Express microservice for persistence and CRUD operations
+- **MongoDB** – NoSQL database for storing sensor readings
+- **Open-Meteo API** – external public API used for weather integration
 
-GatewayService (ASP.NET Core)
+### High-Level Flow
 
-&nbsp;       ↓
+```text
+Client
+   |
+   v
+GatewayService (.NET / ASP.NET Core)
+   |
+   +--> DataService (Node.js / Express)
+   |        |
+   |        v
+   |      MongoDB
+   |
+   +--> External API (Open-Meteo)
+```
 
-DataService (Node.js + Express)
+### Service Responsibilities
 
-&nbsp;       ↓
+#### GatewayService
+GatewayService acts as the **facade** of the system.
 
-MongoDB (Docker)
+Responsibilities:
 
+- exposes the main public REST API,
+- forwards CRUD requests to DataService,
+- synchronously communicates with DataService,
+- integrates data from the external Open-Meteo API,
+- returns aggregated responses to the client.
 
+#### DataService
+DataService is responsible for persistence and direct access to smoke readings.
 
-GatewayService also calls:
+Responsibilities:
 
-&nbsp;       ↓
+- validates incoming requests,
+- stores smoke sensor readings in MongoDB,
+- supports create, read, update, and delete operations,
+- exposes its own REST API,
+- provides OpenAPI documentation,
+- supports bulk CSV import.
 
-External Weather API (Open-Meteo)
+#### MongoDB
+MongoDB is used as the **local NoSQL database**.
 
+Responsibilities:
 
+- stores the smoke reading documents,
+- supports flexible schema for sensor data,
+- provides persistent storage for the data service.
 
-* GatewayService
+---
 
+## Implemented Requirements
 
+This project satisfies the following key project requirements:
 
-Acts as a Facade (API Gateway pattern)
+- two microservices in **different technologies**
+- REST API communication between microservices
+- one microservice acting as an **API Gateway / facade**
+- **CRUD** operations implemented through the gateway
+- synchronous access from gateway to data microservice
+- integration with one **external public API**
+- local **NoSQL database**
+- OpenAPI / Swagger documentation
+- project source code hosted on GitHub
+- API testing support through **Swagger UI** and **Postman collection**
 
+---
 
+## Technologies Used
 
-Forwards client requests to DataService
+- **ASP.NET Core** – GatewayService
+- **Node.js + Express** – DataService
+- **MongoDB** – NoSQL database
+- **Docker & Docker Compose** – container orchestration
+- **Swagger / OpenAPI** – API documentation
+- **Postman** – API testing
+- **CSV Parser** – dataset import
+- **REST APIs** – service communication
+- **Open-Meteo API** – external weather integration
 
+---
 
+## API Overview
 
-Integrates external Weather API
+### GatewayService Endpoints
 
+- `GET /api/health`  
+  Health check for GatewayService
 
+- `POST /api/readings`  
+  Create a new smoke reading
 
-Returns aggregated JSON responses
+- `GET /api/readings`  
+  Get a list of readings
 
+- `GET /api/readings/{id}`  
+  Get one reading by ID
 
+- `PUT /api/readings/{id}`  
+  Update a reading by ID
 
-* DataService
+- `DELETE /api/readings/{id}`  
+  Delete a reading by ID
 
+- `GET /api/insights/current?limit=...`  
+  Returns recent smoke readings enriched with current weather data
 
+### DataService Endpoints
 
-Handles CRUD operations
+- `GET /health`  
+  Health check for DataService and MongoDB connection
 
+- `POST /readings`  
+  Store a new reading in MongoDB
 
+- `GET /readings`  
+  Get readings from MongoDB
 
-Connects to MongoDB
+- `GET /readings/{id}`  
+  Get a single reading by ID
 
+- `PUT /readings/{id}`  
+  Update a reading by ID
 
+- `DELETE /readings/{id}`  
+  Delete a reading by ID
 
-Stores IoT sensor readings
+---
 
+## API Documentation and Testing
 
+### Swagger / OpenAPI
 
-Supports filtering and querying
+#### GatewayService Swagger UI
+- `http://localhost:8080/swagger`
 
+#### DataService Swagger UI
+- `http://localhost:5001/api-docs`
 
+#### DataService OpenAPI JSON
+- `http://localhost:5001/api-docs.json`
 
-* &nbsp;MongoDB
+### Postman Collection
+A Postman collection is included in the repository for testing both services.
 
+Current location in the repository:
+- `DataService/postman_collection.json`
 
+---
 
-Document-based NoSQL database
+## How to Run the Project
 
+### Prerequisites
 
+Before running the project, make sure you have installed:
 
-Stores sensor readings
+- **Docker Desktop**
+- **Git**
+- **Node.js** (only needed for local CSV import)
+- optionally **Postman** for API testing
 
+---
 
+## Running the Project with Docker Compose
 
-Indexed for performance
+From the repository root, run:
 
+```bash
+docker compose up --build
+```
 
+This will start:
 
+- MongoDB
+- DataService
+- GatewayService
 
+### After startup, the following URLs should be available
 
+#### GatewayService
+- Swagger UI: `http://localhost:8080/swagger`
+- Health endpoint: `http://localhost:8080/api/health`
 
+#### DataService
+- Health endpoint: `http://localhost:5001/health`
+- Swagger UI: `http://localhost:5001/api-docs`
+- OpenAPI JSON: `http://localhost:5001/api-docs.json`
 
-##### Technologies Used
+---
 
+## CSV Dataset Import
 
+The project supports importing a smoke detection dataset from CSV into MongoDB.
 
-* ASP.NET Core – Gateway service
-* Node.js + Express – Data service
-* MongoDB – NoSQL database
-* Docker \& Docker Compose – Container orchestration
-* Swagger / OpenAPI – API documentation
-* CSV Parser – Bulk dataset ingestion
-* RESTful APIs – Service communication
-* Open-Meteo API – External service integration
+Expected dataset location:
 
+```text
+data/smoke_detection_iot.csv
+```
 
+To import the dataset manually, run:
 
+```bash
+cd DataService
+npm install
+npm run import:csv
+```
 
+This script reads the CSV file and inserts the data into MongoDB.
 
+---
 
+## Example Usage Scenario
 
-##### Features
+A typical usage flow of the system is:
 
+1. Start all services with Docker Compose
+2. Open Gateway Swagger UI
+3. Create a new smoke reading through GatewayService
+4. Read the stored readings
+5. Update or delete a reading if needed
+6. Call `/api/insights/current` to retrieve sensor data together with weather information
+7. Optionally import the dataset into MongoDB using the CSV import script
 
+---
 
-* CRUD operations on sensor readings
-* Filtering by timestamp and fire alarm status
-* API aggregation (sensor data + live weather)
-* Dockerized multi-service architecture
-* Bulk CSV import of IoT dataset
-* Environment-based configuration
-* Swagger UI for testing
+## Project Structure
 
+```text
+P1-IoT-Smoke-Detection-SOA/
+│
+├── GatewayService/
+│   └── GatewayService/
+│       ├── Controllers/
+│       ├── Dtos/
+│       └── Program.cs
+│
+├── DataService/
+│   ├── src/
+│   ├── scripts/
+│   ├── openapi.yaml
+│   ├── Dockerfile
+│   └── postman_collection.json
+│
+├── data/
+│   └── smoke_detection_iot.csv
+│
+└── docker-compose.yaml
+```
 
+---
 
-
-
-
-
-## How to Run
-
-
-
-* Using Docker
-
-
-
-*From repository root:*
-
-
-
-**docker compose up --build**
-
-
-
-*After startup:*
-
-
-
-Swagger UI → **http://localhost:8080/swagger**
-
-
-
-DataService → **http://localhost:5001/health**
-
-
-
-
-
-* Import CSV Dataset
-
-
-
-*Place dataset inside:*
-
-
-
-**/data/smoke\_detection\_iot.csv**
-
-
-
-*Then run:*
-
-
-
-**cd DataService**
-
-**npm run import:csv**
-
-
-
-This performs bulk insertion into MongoDB.
-
-
-
-
-
-
-
-##### API Overview
-
-
-
-**GatewayService Endpoints**
-
-* Method	Endpoint	Description
-* POST	/api/readings	Create new reading
-* GET	/api/readings	Get readings (with filters)
-* GET	/api/readings/{id}	Get reading by ID
-* GET	/api/insights/current	Latest reading + Weather integration
-
-
-
-**DataService Endpoints**
-
-* Method	Endpoint	Description
-* POST	/readings	Store reading
-* GET	/readings	Query readings
-* GET	/readings/:id	Get reading by ID
-* GET	/health	Service health check
-
-
-
-
-
-
-
-##### Concepts Demonstrated
-
-
+## Concepts Demonstrated
 
 This project demonstrates:
 
+- Service-Oriented Architecture (SOA)
+- API Gateway / Facade pattern
+- RESTful communication between microservices
+- synchronous service orchestration
+- NoSQL data storage
+- CRUD operations across services
+- external API integration
+- OpenAPI documentation
+- Dockerized deployment
+- bulk dataset import
 
+---
 
-* Service-Oriented Architecture (SOA)
-* API Gateway / Facade Pattern
-* RESTful design principles
-* Microservice communication over HTTP
-* NoSQL document modeling
-* Dependency Injection (ASP.NET Core)
-* Middleware pipeline architecture
-* Environment-based configuration
-* Container orchestration
-* Bulk data ingestion
-* API aggregation (service composition)
+## Notes
+
+- GatewayService forwards CRUD operations to DataService.
+- DataService is the only service directly connected to MongoDB.
+- The external Open-Meteo API is used only by GatewayService.
+- The API responses use a unified `id` field instead of raw MongoDB `_id`.
+- The system is intended as a university SOA project demonstrating distributed design and service composition.
