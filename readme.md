@@ -64,6 +64,7 @@ The project demonstrates why service-oriented and microservice-based design is u
 ## Chosen Data Domain
 
 The chosen domain is **smoke detection / environmental monitoring in IoT systems**.
+Link to dataset: https://www.kaggle.com/datasets/deepcontractor/smoke-detection-dataset?resource=download
 
 The application works with smoke-related and environment-related sensor readings, including values such as:
 
@@ -248,12 +249,21 @@ Before running the project, make sure you have installed:
 
 - **Docker Desktop**
 - **Git**
-- **Node.js** (only needed for local CSV import)
+- **Node.js** (needed for the CSV import script)
 - optionally **Postman** for API testing
 
 ---
 
-## Running the Project with Docker Compose
+## Project Initialization
+
+### Step 1 – Clone the repository
+
+```bash
+git clone https://github.com/Dulle99/P1-IoT-Smoke-Detection-SOA.git
+cd P1-IoT-Smoke-Detection-SOA
+```
+
+### Step 2 – Start the infrastructure and services
 
 From the repository root, run:
 
@@ -261,13 +271,33 @@ From the repository root, run:
 docker compose up --build
 ```
 
-This will start:
+This starts:
 
 - MongoDB
 - DataService
 - GatewayService
 
-### After startup, the following URLs should be available
+### Step 3 – Populate MongoDB with initial data
+
+The repository already contains the dataset file in:
+
+```text
+data/smoke_detection_iot.csv
+```
+
+After the containers are running, open a **new terminal** and run:
+
+```bash
+cd DataService
+npm install
+npm run import:csv
+```
+
+This command reads the CSV dataset from the repository `data/` folder and inserts the readings into MongoDB.
+
+> Note: MongoDB is started through Docker Compose and exposed on `localhost:27017`, so the import script can be executed locally from the `DataService` folder after the containers are up.
+
+### Step 4 – Verify that the system is running
 
 #### GatewayService
 - Swagger UI: `http://localhost:8080/swagger`
@@ -284,21 +314,25 @@ This will start:
 
 The project supports importing a smoke detection dataset from CSV into MongoDB.
 
-Expected dataset location:
+Dataset location in the repository:
 
 ```text
 data/smoke_detection_iot.csv
 ```
 
-To import the dataset manually, run:
+Manual import command:
 
 ```bash
 cd DataService
 npm install
 npm run import:csv
 ```
+```powershell
+npm.cmd install
+npm.cmd run import:csv
+```
 
-This script reads the CSV file and inserts the data into MongoDB.
+This script is intended for **initial database population**, so that the system starts with a realistic dataset already stored in MongoDB.
 
 ---
 
@@ -306,13 +340,14 @@ This script reads the CSV file and inserts the data into MongoDB.
 
 A typical usage flow of the system is:
 
-1. Start all services with Docker Compose
-2. Open Gateway Swagger UI
-3. Create a new smoke reading through GatewayService
-4. Read the stored readings
-5. Update or delete a reading if needed
-6. Call `/api/insights/current` to retrieve sensor data together with weather information
-7. Optionally import the dataset into MongoDB using the CSV import script
+1. Clone the repository
+2. Start all services with Docker Compose
+3. Populate MongoDB with the CSV dataset
+4. Open Gateway Swagger UI
+5. Create a new smoke reading through GatewayService
+6. Read the stored readings
+7. Update or delete a reading if needed
+8. Call `/api/insights/current` to retrieve sensor data together with weather information
 
 ---
 
@@ -365,4 +400,5 @@ This project demonstrates:
 - DataService is the only service directly connected to MongoDB.
 - The external Open-Meteo API is used only by GatewayService.
 - The API responses use a unified `id` field instead of raw MongoDB `_id`.
+- The CSV import step should be executed after Docker Compose startup in order to populate the database with initial data.
 - The system is intended as a university SOA project demonstrating distributed design and service composition.
