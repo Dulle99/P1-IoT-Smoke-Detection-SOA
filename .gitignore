@@ -21,5 +21,4 @@ yarn-error.log*
 # Environment files
 .env
 
-#data
-data/*.csv
+
